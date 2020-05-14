@@ -1,0 +1,61 @@
+import urllib.request
+from inscriptis import get_text
+import math
+from CountWords import CountWords
+import sys
+
+
+class TFIDF:
+
+    def process(url, kwd):
+        d = 0
+        try:
+
+            print("in process")
+            # kwd= "python java"
+            html = ""
+            try:
+                html = urllib.request.urlopen(url).read().decode('utf-8')
+            except:
+                pass
+            text = get_text(html)
+        # print(text)
+
+            d = TFIDF.main(text, kwd)
+
+        except Exception as e:
+            print("try1")
+            print(e.args[0])
+            tb = sys.exc_info()[2]
+            print(tb.tb_lineno)
+        return d
+
+
+	def main(stmnts, cont):
+		d = 0
+
+		try:
+
+			l = len(cont)
+			tot = 0
+			for w in cont.split():
+				c = CountWords.countOccurences(stmnts, w)
+				tot = tot + c
+			tot = tot / l
+			idf = math.log(l)
+			d = tot * idf
+
+
+
+		except Exception as e:
+			print("trY3")
+			print(e.args[0])
+			tb = sys.exc_info()[2]
+			print(tb.tb_lineno)
+		return d
+
+
+if __name__ == "__main__":
+    r = TFIDF.process("https://www.ndtv.com/topic/bjp-modi",
+                      'modi')
+    print(r)
