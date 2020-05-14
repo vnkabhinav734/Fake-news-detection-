@@ -1,0 +1,20 @@
+{% extends 'base_u.html' %}
+{% block content %}
+
+<center>
+<h2>TfIDF Results</h2>
+<br>
+<table id="tab">
+{% for d in data %}
+<tr><td>{{d.url}}<td>{{d.score}}
+{% endfor %}
+</table>
+</table>
+<form method="post" action="/tfidfcalc">
+	{% csrf_token %}
+<table >
+<tr><td><br><br><input class="form-control" type="submit" value="TfIdf Calculation">
+</form>
+</table>
+
+{% endblock %}
